@@ -17,18 +17,18 @@
       genPkgs = system:
         import inputs.nixpkgs {
           inherit system;
-          overlays = builtins.attrValues (import ./overlays.nix {inherit inputs;});
+          overlays = builtins.attrValues (import ./overlays.nix { inherit inputs; });
         };
     in
     inputs.parts.lib.mkFlake { inherit inputs; } {
       systems = inputs.nixpkgs.lib.systems.flakeExposed;
 
-      imports = [inputs.devshell.flakeModule];
+      imports = [ inputs.devshell.flakeModule ];
 
-      perSystem = {inputs', self', pkgs, system, ...}: {
+      perSystem = { inputs', self', pkgs, system, ... }: {
         _module.args.pkgs = genPkgs system;
         devShells.default = pkgs.devshell.mkShell {
-          imports = [(pkgs.devshell.importTOML ./devshell.toml)];
+          imports = [ (pkgs.devshell.importTOML ./devshell.toml) ];
         };
       };
     };

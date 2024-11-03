@@ -18,18 +18,16 @@ tasks:
       vars:
         - CLUSTER
         - CONTROLLER
-
   bootstrap-etcd:
     desc: Bootstrap Etcd
     cmd: until talosctl --nodes {{.CONTROLLER}} bootstrap; do sleep 10; done
     requires:
       vars:
         - CONTROLLER
-
   bootstrap-integrations:
     desc: Bootstrap core integrations need for Talos
     cmds:
-#      - until kubectl wait --for=condition=Ready=False nodes --all --timeout=600s; do sleep 10; done
+      #      - until kubectl wait --for=condition=Ready=False nodes --all --timeout=600s; do sleep 10; done
       - helmfile --kube-context {{.CLUSTER}} --file {{.CLUSTER_PATH}}/bootstrap/helmfile.yaml apply --skip-diff-on-install --suppress-diff
       - until kubectl wait --for=condition=Ready nodes --all --timeout=600s; do sleep 10; done
     requires:
@@ -40,7 +38,6 @@ tasks:
       - sh: kubectl config get-contexts {{.CLUSTER}}
         msg: "Kubectl context {{.CLUSTER}} not found"
       - test -f {{.CLUSTER_PATH}}/bootstrap/helmfile.yaml
-
   fetch-kubeconfig:
     desc: Fetch kubeconfig from Talos controllers
     cmd: |
@@ -49,15 +46,10 @@ tasks:
     requires:
       vars:
         - CLUSTER
-
   generate-clusterconfig:
     desc: Generate clusterconfig for Talos
     cmds:
-      - talhelper genconfig
-        --env-file {{.CLUSTER_PATH}}/bootstrap/talos/talenv.sops.yaml
-        --secret-file {{.CLUSTER_PATH}}/bootstrap/talos/talsecret.sops.yaml
-        --config-file {{.CLUSTER_PATH}}/bootstrap/talos/talconfig.yaml
-        --out-dir {{.CLUSTER_PATH}}/bootstrap/talos/clusterconfig
+      - talhelper genconfig --env-file {{.CLUSTER_PATH}}/bootstrap/talos/talenv.sops.yaml --secret-file {{.CLUSTER_PATH}}/bootstrap/talos/talsecret.sops.yaml --config-file {{.CLUSTER_PATH}}/bootstrap/talos/talconfig.yaml --out-dir {{.CLUSTER_PATH}}/bootstrap/talos/clusterconfig
     requires:
       vars:
         - CLUSTER_PATH
@@ -65,7 +57,6 @@ tasks:
       - test -f {{.CLUSTER_PATH}}/bootstrap/talos/talenv.sops.yaml
       - test -f {{.CLUSTER_PATH}}/bootstrap/talos/talsecret.sops.yaml
       - test -f {{.CLUSTER_PATH}}/bootstrap/talos/talconfig.yaml
-
   upgrade:
     desc: Upgrade Talos version for a node
     vars:
@@ -90,7 +81,6 @@ tasks:
       - test -f {{.CLUSTER_PATH}}/bootstrap/talos/talconfig.yaml
       - msg: Talos image could not be determined for node={{.NODE}}
         sh: test -n "{{.TALOS_IMAGE}}"
-
   upgrade-k8s:
     desc: Upgrade Kubernetes version for a Talos Cluster
     silent: false
@@ -109,7 +99,6 @@ tasks:
     preconditions:
       - talos config info &>/dev/null
       - talosctl --nodes {{.TALOS_CONTROLLER}} get machineconfig &>/dev/null
-
   apply-clusterconfigs:
     desc: Apply clusterconfig for a Talos cluster
     vars:
@@ -127,15 +116,11 @@ tasks:
     requires:
       vars:
         - CLUSTER
-
   _apply-machineconfig:
     internal: true
     desc: Apply a single Talos machineConfig to a Talos node
     cmds:
-      - talosctl apply-config
-        --nodes "{{.hostname}}"
-        --file {{.CLUSTER_PATH}}/bootstrap/talos/clusterconfig/{{.filename}}
-        {{ if eq "true" .DRY_RUN }}--dry-run {{ end }}
+      - talosctl apply-config --nodes "{{.hostname}}" --file {{.CLUSTER_PATH}}/bootstrap/talos/clusterconfig/{{.filename}} {{ if eq "true" .DRY_RUN }}--dry-run {{ end }}
     requires:
       vars:
         - CLUSTER

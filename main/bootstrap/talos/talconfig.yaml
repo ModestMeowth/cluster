@@ -1,21 +1,15 @@
----
 clusterName: ${clusterName}
 endpoint: https://${clusterEndpointIP}:6443
-
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
 talosVersion: 1.8.2
-
 # renovate: depName=ghcr.io/siderolabs/kubelet datasource=docker
 kubernetesVersion: v1.31.2
-
 additionalApiServerCertSans: &san
   - ${clusterName}.${clusterDNSSuffix}
   - 127.0.0.1
 additionalMachineCertSans: *san
-
 cniConfig:
   name: none
-
 nodes:
   - hostname: talos0
     ipAddress: 192.168.1.2
@@ -33,25 +27,22 @@ nodes:
             gateway: 192.168.1.1
         vip:
           ip: ${clusterEndpointIP}
-
   - hostname: talos1
     ipAddress: 192.168.1.3
     installDisk: /dev/vda
     controlPlane: true
     networkInterfaces:
-      - <<: *vm_nic
+      - !!merge <<: *vm_nic
         addresses:
           - 192.168.1.3/24
-
   - hostname: talos2
     ipAddress: 192.168.1.4
     installDisk: /dev/vda
     controlPlane: true
     networkInterfaces:
-      - <<: *vm_nic
+      - !!merge <<: *vm_nic
         addresses:
           - 192.168.1.4/24
-
 controlPlane:
   patches:
     # Disable search domian everywhere
