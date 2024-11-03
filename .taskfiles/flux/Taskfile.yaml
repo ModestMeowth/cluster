@@ -1,0 +1,17 @@
+version: "3"
+tasks:
+  bootstrap:
+    desc: Bootstrap Flux into a cluster
+    cmds:
+      # Install Flux
+      - kubectl apply --server-side --kustomize {{.CLUSTER_PATH}}/bootstrap/flux
+      # Install secrets
+      - sops --decrypt {{.CLUSTER_PATH}}/bootstrap/flux/age-key.sops.yaml | kubectl apply -f-
+    requires:
+      vars:
+        - CLUSTER
+    preconditions:
+      - sh: kubectl config get-contexts {{.CLUSTER}}
+        msg: Kubectl context {{.CLUSTER}} not found
+      - test -f $HOME/.config/sops/age/keys.txt
+      - sops --decrypt {{.CLUSTER_PATH}}/bootstrap/flux/age-key.sops.yaml

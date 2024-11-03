@@ -1,0 +1,11 @@
+.direnv/
+.env
+kubeconfig
+talosconfig
+
+# Sops
+.decrypted~*
+
+# Trash
+.DS_Store
+Thumbs.db

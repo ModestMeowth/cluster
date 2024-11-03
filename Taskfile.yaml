@@ -1,0 +1,30 @@
+version: "3"
+vars:
+  KUBERNETES_PATH: "{{.ROOT_DIR}}"
+  CLUSTER: '{{.CLUSTER | default "main"}}'
+  CLUSTER_PATH: "{{.KUBERNETES_PATH}}/{{.CLUSTER}}"
+env:
+  KUBECONFIG: "{{.CLUSTER_PATH}}/kubeconfig"
+  TALOSCONFIG: "{{.CLUSTER_PATH}}/bootstrap/talos/clusterconfig/talosconfig"
+includes:
+  flux:
+    dir: .taskfiles/flux
+    taskfile: .taskfiles/flux
+  sops:
+    dir: .taskfiles/sops
+    taskfile: .taskfiles/sops
+  talos:
+    dir: .taskfiles/talos
+    taskfile: .taskfiles/talos
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task -l
+  format:
+    desc: Format files with Treefmt
+    aliases:
+      - f
+      - fmt
+    cmds:
+      - treefmt -u info

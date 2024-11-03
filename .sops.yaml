@@ -1,0 +1,15 @@
+keys:
+  - &roci_host_age age1xltxc87jgp6fzjlwapfctpa23vaqn2cqwqyta8vh0g0yrgs6adfqs0arc9
+  - &roci_mm_age age18lt2qwmtvuj0ujf9zrxr4wsehhxuvqc3e79s53c20wq5fv6jhqyst4m83t
+creation_rules:
+  - path_regex: .*/talos/.*\.sops.ya?ml$
+    key_groups:
+      - age:
+        - *roci_host_age
+        - *roci_mm_age
+  - path_regex: .*\.sops\.ya?ml$
+    encrypted_regex: "^(data|stringData)$"
+    key_groups:
+      - age:
+        - *roci_host_age
+        - *roci_mm_age
