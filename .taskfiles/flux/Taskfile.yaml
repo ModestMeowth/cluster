@@ -7,6 +7,10 @@ tasks:
       - kubectl apply --server-side --kustomize {{.CLUSTER_PATH}}/bootstrap/flux
       # Install secrets
       - sops --decrypt {{.CLUSTER_PATH}}/bootstrap/flux/age-key.sops.yaml | kubectl apply -f-
+      - sops --decrypt {{.CLUSTER_PATH}}/flux/vars/cluster-secrets.sops.yaml | kubectl apply -f-
+      - kubectl apply --server-side --filename {{.CLUSTER_PATH}}/flux/vars/cluster-settings.yaml
+      # Install Flux-Kustomization resources
+      - kubectl apply --server-side --kustomize {{.CLUSTER_PATH}}/flux/config
     requires:
       vars:
         - CLUSTER
@@ -14,4 +18,10 @@ tasks:
       - sh: kubectl config get-contexts {{.CLUSTER}}
         msg: Kubectl context {{.CLUSTER}} not found
       - test -f $HOME/.config/sops/age/keys.txt
+      - test -f {{.CLUSTER_PATH}}/bootstrap/flux/age-key.sops.yaml
+      - test -f {{.CLUSTER_PATH}}/flux/vars/cluster-secrets.sops.yaml
+      - test -f {{.CLUSTER_PATH}}/flux/vars/cluster-settings.yaml
       - sops --decrypt {{.CLUSTER_PATH}}/bootstrap/flux/age-key.sops.yaml
+      - sops --decrypt  {{.CLUSTER_PATH}}/flux/vars/cluster-secrets.sops.yaml
+      - kubectl kustomize {{.CLUSTER_PATH}}/bootstrap/flux
+      - kubectl kustomize {{.CLUSTER_PATH}}/flux/config

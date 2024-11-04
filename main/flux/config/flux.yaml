@@ -17,7 +17,8 @@ metadata:
 spec:
   interval: 10m
   path: ./
-  prune: wait
+  prune: true
+  wait: true
   sourceRef:
     kind: OCIRepository
     name: flux-manifests
