@@ -37,16 +37,16 @@ spec:
     # https://fluxcd.io/flux/cheatsheets/bootstrap/#increase-the-number-of-workers
     - patch: |
         - op: add
-          path: /spec/template/containers/0/args/-
+          path: /spec/template/spec/containers/0/args/-
           value: --concurrent=12
         - op: add
-          path: /spec/template/containers/0/args/-
+          path: /spec/template/spec/containers/0/args/-
           value: --kube-api-qps=500
         - op: add
-          path: /spec/template/containers/0/args/-
+          path: /spec/template/spec/containers/0/args/-
           value: --kube-api-burst=1000
         - op: add
-          path: /spec/template/containers/0/args/-
+          path: /spec/template/spec/containers/0/args/-
           value: --requeue-dependency=5s
       target:
         kind: Deployment
