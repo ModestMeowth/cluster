@@ -1,4 +1,4 @@
-nameReferences:
+nameReference:
   - kind: ConfigMap
     version: v1
     fieldSpecs:
