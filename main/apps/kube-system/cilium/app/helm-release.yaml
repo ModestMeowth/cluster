@@ -9,7 +9,7 @@ spec:
       interval: 30m
       sourceRef:
         kind: HelmRepository
-        name: Cilium
+        name: cilium
         namespace: flux-system
       version: 1.16.3
   interval: 30m
