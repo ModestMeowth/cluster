@@ -1,7 +1,7 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
-    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs";
+    unstable.url = "unstable";
 
     devshell.url = "github:numtide/devshell";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
@@ -13,20 +13,36 @@
   };
 
   outputs = { ... } @ inputs:
-    let
-      genPkgs = system:
-        import inputs.nixpkgs {
-          inherit system;
-          overlays = builtins.attrValues (import ./overlays.nix { inherit inputs; });
-        };
-    in
     inputs.parts.lib.mkFlake { inherit inputs; } {
       systems = inputs.nixpkgs.lib.systems.flakeExposed;
 
       imports = [ inputs.devshell.flakeModule ];
 
-      perSystem = { inputs', self', pkgs, system, ... }: {
-        _module.args.pkgs = genPkgs system;
+      perSystem = {pkgs, system, ...}: {
+        _module.args.pkgs = import inputs.nixpkgs {
+          inherit system;
+          overlays = [
+            inputs.talhlpr.packages.${system}.default
+            inputs.devshell.overlays.default
+            (final: _: {
+              unstable = import inputs.unstable {
+                inherit (final) system;
+                overlays = [
+                  (final: prev: {
+                    kubernetes-helm-wrapped = prev.wrapHelm prev.kubernetes-helm {
+                      plugins = with prev.kubernetes-helmPlugins; [
+                        helm-diff
+                        helm-git
+                        helm-unittest
+                      ];
+                    };
+                  })
+                ];
+              };
+            })
+          ];
+        };
+
         devShells.default = pkgs.devshell.mkShell {
           imports = [ (pkgs.devshell.importTOML ./devshell.toml) ];
         };
