@@ -26,7 +26,7 @@ spec:
               labelSelector:
                 matchLabels:
                   app.kubernetes.io/name: k8tz
-            topologyKey: kubernetes.io/hostname
+              topologyKey: kubernetes.io/hostname
   postRenderers:
     - kustomize:
         patches:
