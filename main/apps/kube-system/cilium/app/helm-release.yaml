@@ -5,7 +5,7 @@ metadata:
 spec:
   chart:
     spec:
-      chart: Cilium
+      chart: cilium
       interval: 30m
       sourceRef:
         kind: HelmRepository
