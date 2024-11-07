@@ -2,14 +2,13 @@
   inputs = {
     nixpkgs.url = "nixpkgs";
     unstable.url = "unstable";
+    parts.url = "flake-parts";
 
-    devshell.url = "github:numtide/devshell";
+    devshell.url = "devshell";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
 
     talhlpr.url = "github:budimanjojo/talhelper";
     talhlpr.inputs.nixpkgs.follows = "unstable";
-
-    parts.url = "github:hercules-ci/flake-parts";
   };
 
   outputs = { ... } @ inputs:
@@ -22,8 +21,10 @@
         _module.args.pkgs = import inputs.nixpkgs {
           inherit system;
           overlays = [
-            inputs.talhlpr.packages.${system}.default
             inputs.devshell.overlays.default
+            (final: _: {
+              talhelper = inputs.talhlpr.packages.${system}.default;
+            })
             (final: _: {
               unstable = import inputs.unstable {
                 inherit (final) system;

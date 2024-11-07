@@ -15,9 +15,8 @@
         "type": "github"
       },
       "original": {
-        "owner": "numtide",
-        "repo": "devshell",
-        "type": "github"
+        "id": "devshell",
+        "type": "indirect"
       }
     },
     "flake-parts": {
@@ -87,9 +86,8 @@
         "type": "github"
       },
       "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
+        "id": "flake-parts",
+        "type": "indirect"
       }
     },
     "root": {
@@ -109,11 +107,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1730345795,
-        "narHash": "sha256-mH3+juza1czaEmE9Fr61zfHp00uRt4bq4rbkQO0lFiU=",
+        "lastModified": 1730778489,
+        "narHash": "sha256-QZIzk3Bewp6KR9OVXApItLXqm4q7qonHqJjMrg4p/BI=",
         "owner": "budimanjojo",
         "repo": "talhelper",
-        "rev": "5d77059e2105e50d52517dbf58e3fe56775d5001",
+        "rev": "20a0897f98cd0650df1d3b89b08a00bd0aff35e9",
         "type": "github"
       },
       "original": {
