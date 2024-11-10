@@ -10,15 +10,15 @@ cgroup:
   autoMount:
     enabled: false
   hostRoot: /sys/fs/cgroup
-cluster:
-  id: 1
-  name: main
-cni:
-  exclusive: false
-devices: enx*
-enableRuntimeDeviceDetection: true
-endpointRoutes:
-  enabled: true
+#cluster:
+#  id: 1
+#  name: main
+#cni:
+#  exclusive: false
+#devices: enx*
+#enableRuntimeDeviceDetection: true
+#endpointRoutes:
+#  enabled: true
 envoy:
   enabled: false
 hubble:
@@ -42,10 +42,12 @@ hubble:
     ingress:
       enabled: false
     rollOutPods: true
-ipv4NativeRoutingCIDR: 10.244.0.0/16
-k8sServicehost: 127.0.0.1
-k8sServicePort: 7445
+#ipv4NativeRoutingCIDR: 10.244.0.0/16
+ipam:
+  mode: kubernetes
 kubeProxyReplacement: true
+k8sServicePort: 7445
+k8sServicehost: 127.0.0.1
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 l2announcements:
   enabled: true
@@ -57,11 +59,6 @@ operator:
   rollOutPods: true
 rollOutCiliumPods: true
 routingMode: native
-ipam:
-  mode: kubernetes
-kubeProxyReplacement: true
-k8sServiceHost: localhost
-k8sServicePort: 7445
 securityContext:
   capabilities:
     ciliumAgent:
