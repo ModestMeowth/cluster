@@ -1,3 +1,4 @@
+---
 providerRegex: |
   ^talos[0-2]$
 bypassDnsResolution: true

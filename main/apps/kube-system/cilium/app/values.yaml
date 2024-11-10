@@ -1,3 +1,4 @@
+---
 autoDirectNodeRoutes: true
 bandwidthManager:
   bbr: true

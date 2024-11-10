@@ -1,3 +1,4 @@
+---
 clusterName: ${clusterName}
 endpoint: https://${clusterEndpointIP}:6443
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker

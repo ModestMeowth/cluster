@@ -46,7 +46,7 @@ packages = [
   "pkgs.mdformat",
   "pkgs.nixpkgs-fmt",
   "pkgs.taplo",
-  "pkgs.yamlfmt",
+  "unstable.yamlfmt",
   "pkgs.pre-commit",
   "pkgs.pre-commit-hook-ensure-sops",
   "pkgs.jq",

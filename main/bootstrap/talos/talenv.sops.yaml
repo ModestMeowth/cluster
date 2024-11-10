@@ -1,3 +1,4 @@
+---
 clusterName: ENC[AES256_GCM,data:0QCFDA==,iv:T9RWLalTgCxF5oN5/LKoeqZ6tiL+qzayQjqUA/oZpSY=,tag:foABvCUfGwD4TJixspbjnA==,type:str]
 clusterDNSSuffix: ENC[AES256_GCM,data:OpB2/ug=,iv:Gxroj/qVKfNG+RiOmGacaORgcMVduod4BeGQ7XPFoyI=,tag:N0+Uq1xPABekZqpUeDfZjA==,type:str]
 clusterEndpointIP: ENC[AES256_GCM,data:nBKcdmpoLX6j7lzWgg==,iv:P1QhHf/cbvxVS3MjY12xCDdOe+obk7o3yALy3mO+WPw=,tag:MwXXXX2lfpymwOjSIHLWLw==,type:str]

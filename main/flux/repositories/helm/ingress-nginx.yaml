@@ -2,8 +2,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: coredns
+  name: ingress-nginx
   namespace: flux-system
 spec:
-  interval: 2h
-  url: https://coredns.github.io/helm
+  interval: 30m
+  timeout: 3m
+  url: https://kubernetes.github.io/ingress-nginx

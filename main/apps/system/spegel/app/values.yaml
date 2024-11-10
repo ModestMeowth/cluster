@@ -1,3 +1,4 @@
+---
 spegel:
   appendMirrors: true
   containerdSock: /run/containerd/containerd.sock
