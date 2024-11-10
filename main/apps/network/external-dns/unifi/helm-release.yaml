@@ -33,9 +33,20 @@ spec:
           tag: v0.3.1
         env:
           - name: UNIFI_HOST
+            valueFrom:
+              secretKeyRef:
+                name: cluster-secrets
+                key: UNIFI_HOST
           - name: UNIFI_USER
             valueFrom:
+              secretKeyRef:
+                name: cluster-secrets
+                key: UNIFI_USER
           - name: UNIFI_PASS
+            valueFrom:
+              secretKeyRef:
+                name: cluster-secrets
+                key: UNIFI_PASS
         livenessProbe:
           httpGet:
             path: /healthz
