@@ -1,0 +1,39 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &appname externaldns-external
+  namespace: flux-system
+spec:
+  targetNamespace: network
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *appname
+  interval: 30m
+  timeout: 5m
+  path: ./kubernetes/main/apps/network/external-dns/external
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: cluster-git
+  wait: true
+  dependsOn: []
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &appname externaldns-unifi
+  namespace: flux-system
+spec:
+  targetNamespace: network
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *appname
+  interval: 30m
+  timeout: 5m
+  path: ./kubernetes/main/apps/network/external-dns/unifi
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: cluster-git
+  wait: false
+  dependsOn: []
