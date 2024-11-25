@@ -1,20 +1,29 @@
 ---
 version: "3"
 vars:
-  KUBERNETES_PATH: "{{.ROOT_DIR}}"
-  CLUSTER: '{{.CLUSTER | default "main"}}'
-  CLUSTER_PATH: "{{.KUBERNETES_PATH}}/{{.CLUSTER}}"
+  CLUSTER: cluster
 env:
-  KUBECONFIG: "{{.CLUSTER_PATH}}/kubeconfig"
-  TALOSCONFIG: "{{.CLUSTER_PATH}}/bootstrap/talos/clusterconfig/talosconfig"
+  KUBECONFIG: "{{.ROOT_DIR}}/kubeconfig"
+  TALOSCONFIG: "{{.ROOT_DIR}}/bootstrap/talos/clusterconfig/talosconfig"
 includes:
   flux:
+    aliases:
+      - f
     dir: .taskfiles/flux
     taskfile: .taskfiles/flux
+  k8s:
+    aliases:
+      - k
+    dir: .taskfiles/k8s
+    taskfile: .taskfiles/k8s
   sops:
+    aliases:
+      - s
     dir: .taskfiles/sops
     taskfile: .taskfiles/sops
   talos:
+    aliases:
+      - t
     dir: .taskfiles/talos
     taskfile: .taskfiles/talos
 tasks:

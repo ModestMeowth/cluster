@@ -4,28 +4,35 @@ helmDefaults:
   waitForJobs: true
   timeout: 600
   force: true
+
 repositories:
   - name: prometheus-community
     url: https://prometheus-community.github.io/helm-charts
+
   - name: postfinance
     url: https://postfinance.github.io/kubelet-csr-approver
+
   - name: cilium
     url: https://helm.cilium.io
+
   - name: coredns
     url: https://coredns.github.io/helm
+
 releases:
   - name: prometheus-operator-crds
     namespace: monitoring
     chart: prometheus-community/prometheus-operator-crds
     version: 16.0.0
+
   - name: cilium
     namespace: kube-system
     chart: cilium/cilium
-    version: 1.16.3
+    version: 1.16.4
     values:
       - ../apps/kube-system/cilium/app/values.yaml
     needs:
       - monitoring/prometheus-operator-crds
+
   - name: coredns
     namespace: kube-system
     chart: coredns/coredns
@@ -35,8 +42,9 @@ releases:
     needs:
       - monitoring/prometheus-operator-crds
       - kube-system/cilium
+
   - name: kubelet-csr-approver
-    namespace: system-controller
+    namespace: system-controllers
     chart: postfinance/kubelet-csr-approver
     version: 1.2.3
     values:
@@ -44,15 +52,4 @@ releases:
     needs:
       - kube-system/cilium
       - kube-system/coredns
-      - monitoring/prometheus-operator-crds
-  - name: spegel
-    namespace: system
-    chart: oci://ghcr.io/spegel-org/helm-charts/spegel
-    version: v0.0.27
-    values:
-      - ../apps/system/spegel/app/values.yaml
-    needs:
-      - kube-system/cilium
-      - kube-system/coredns
-      - system-controller/kubelet-csr-approver
       - monitoring/prometheus-operator-crds

@@ -1,7 +1,8 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: nginx-internal
+  name: nginx-external
 spec:
   interval: 30m
   chart:
@@ -14,7 +15,7 @@ spec:
         namespace: flux-system
       interval: 30m
   values:
-    fullnameOverride: nginx-internal
+    fullnameOverride: nginx-external
     controller:
       replicaCount: 2
       updateStrategy:
@@ -25,14 +26,14 @@ spec:
         enabled: true
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "ingress-int.rocinante.lan"
+          external-dns.alpha.kubernetes.io/hostname: "ingress-ext.rocinante.lan"
           lbipam.cilium.io/ips: "10.1.1.132"
       publishService:
         enabled: true
       ingressClassResource:
         name: external-nginx
         default: false
-        controllerValue: k8s.io/ingress-nginx-internal
+        controllerValue: k8s.io/ingress-nginx-external
       admissionWebhooks:
         objectSelector:
           matchExpressions:
@@ -76,7 +77,7 @@ spec:
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              app.kubernetes.io/instance: nginx-internal
+              app.kubernetes.io/instance: nginx-external
               app.kubernetes.io/component: controller
       resources:
         requests:

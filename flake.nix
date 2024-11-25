@@ -1,9 +1,8 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs";
-    unstable.url = "unstable";
+    nixpkgs.url = "nixpkgs/nixos-24.05";
+    unstable.url = "nixpkgs/nixos-unstable";
     parts.url = "flake-parts";
-
     devshell.url = "devshell";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
 

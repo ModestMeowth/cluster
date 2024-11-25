@@ -1,0 +1,12 @@
+---
+version: "3"
+tasks:
+  apps:
+    desc: Bootstrap Apps
+    cmds:
+      - helmfile --quiet --file {{.ROOT_DIR}}/bootstrap/helmfile.yaml apply --skip-diff-on-install --suppress-diff
+    preconditions:
+      - which helmfile kubectl
+      - test -f {{.TALOSCONFIG}}
+      - test -f {{.ROOT_DIR}}/bootstrap/helmfile.yaml
+      - talosctl config info
