@@ -1,12 +1,18 @@
 ---
 version: "3"
 tasks:
-  apps:
-    desc: Bootstrap Apps
-    cmds:
-      - helmfile --quiet --file {{.ROOT_DIR}}/bootstrap/helmfile.yaml apply --skip-diff-on-install --suppress-diff
+  cleanup-pods:
+    aliases:
+      - clean
+      - c
+    desc: Clean up pods with a Failed/Pending/Succeeded phase
     preconditions:
-      - which helmfile kubectl
-      - test -f {{.TALOSCONFIG}}
-      - test -f {{.ROOT_DIR}}/bootstrap/helmfile.yaml
-      - talosctl config info
+      - which kubectl
+    cmds:
+      - for:
+          matrix:
+            PHASE:
+              - Failed
+              - Pending
+              - Succeeded
+        cmd: kubectl delete pods --field-selector status.phase={{.ITEM.PHASE}} -A --ignore-not-found=true

@@ -22,7 +22,7 @@ hubble:
   enabled: true
   metrics:
     enabled:
-      - dns:query;ignoreAAAA
+      - "dns:query;ignoreAAAA"
       - drop
       - tcp
       - flow
@@ -41,9 +41,9 @@ hubble:
     rolloutPods: true
 ipam:
   mode: kubernetes
-ipv4NativeRoutingCIDR: 192.168.128.0/17
+ipv4NativeRoutingCIDR: 10.244.0.0/16
+k8sServiceHost: 127.0.0.1
 k8sServicePort: 7445
-k8sServiceHost: localhost
 kubeProxyReplacement: true
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 l2announcements:

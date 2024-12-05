@@ -1,6 +1,6 @@
 ---
 clusterName: &clustername cluster
-endpoint: https://cluster.rocinante.lan:6443
+endpoint: https://192.168.100.101:6443
 
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
 talosVersion: 1.8.3
@@ -8,7 +8,7 @@ talosVersion: 1.8.3
 kubernetesVersion: v1.31.3
 
 additionalApiServerCertSans: &sans
-  - cluster.rocinante.lan
+  - rocinante.cat-alkaline.ts.net
   - &vip ${clusterEndpointIP}
   - 127.0.0.1 # KubePrism
 additionalMachineCertSans: *sans
@@ -19,7 +19,7 @@ cniConfig:
 nodes:
   - hostname: controller
     ignoreHostname: true
-    ipAddress: 192.168.1.101, 192.168.1.102, 192.168.1.103
+    ipAddress: 192.168.100.101, 192.168.100.102, 192.168.100.103
     installDisk: /dev/vda
     controlPlane: true
     networkInterfaces:
@@ -86,12 +86,14 @@ controlPlane:
     - |-
       machine:
         kubelet:
+          extraArgs:
+            rotate-server-certificates: "true"
           extraConfig:
             maxPods: 150
           extraMounts: []
           nodeIP:
             validSubnets:
-              - 192.168.1.0/24
+              - 192.168.100.0/24
     # Enable KubePrism
     - |-
       machine:
@@ -126,9 +128,18 @@ controlPlane:
       machine:
         network:
           extraHostEntries:
-            - ip: 192.168.1.100
+            - ip: 192.168.100.100
               aliases:
                 - cluster.local
+            - ip: 192.168.100.101
+              aliases:
+                - talos1
+            - ip: 192.168.100.102
+              aliases:
+                - talos2
+            - ip: 192.168.100.103
+              aliases:
+                - talos3
     # Configure custom sysctls
     - |-
       machine:
@@ -154,7 +165,7 @@ controlPlane:
       cluster:
         etcd:
           advertisedSubnets:
-            - 192.168.1.0/24
+            - 192.168.100.0/24
     # Configure NFS mount options
     - |-
       machine:

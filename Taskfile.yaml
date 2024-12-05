@@ -6,6 +6,11 @@ env:
   KUBECONFIG: "{{.ROOT_DIR}}/kubeconfig"
   TALOSCONFIG: "{{.ROOT_DIR}}/bootstrap/talos/clusterconfig/talosconfig"
 includes:
+  bootstrap:
+    aliases:
+      - b
+    dir: .taskfiles/bootstrap
+    taskfile: .taskfiles/bootstrap
   flux:
     aliases:
       - f

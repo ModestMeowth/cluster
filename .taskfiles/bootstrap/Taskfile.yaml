@@ -1,0 +1,54 @@
+---
+version: "3"
+vars:
+  BOOTSTRAP_PATH: "{{.ROOT_DIR}}/bootstrap"
+  FLUX_PATH: "{{.ROOT_DIR}}/flux"
+tasks:
+  talos:
+    aliases:
+      - t
+    desc: Bootstrap Talos
+    vars:
+      TALOS_CONTROLLER:
+        sh: talosctl config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1
+    preconditions:
+      - which talhelper
+      - test -f "${TALOSCONFIG}"
+      - talosctl config info
+    cmds:
+      - task: :talos:apply-clusterconfig
+        vars:
+          INSECURE: "true"
+      - task: :talos:bootstrap
+      - task: :talos:kubeconfig
+
+  apps:
+    aliases:
+      - a
+    desc: Bootstrap Apps
+    preconditions:
+      - which helmfile kubectl
+      - test -f "${TALOSCONFIG}"
+      - test -f {{.BOOTSTRAP_PATH}}/apps/helmfile.yaml
+      - talosctl config info
+    cmds:
+      - until kubectl wait nodes --for-condition=Ready=False --all --timeout=10m; do sleep 5; done
+      - helmfile --quiet --file {{.BOOTSTRAP_PATH}}/apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
+      - until kubectl wait nodes --for=condition=Ready --all --timeout=10m; do sleep 5; done
+
+  flux:
+    aliases:
+      - f
+    desc: Bootstrap Flux
+    preconditions:
+      - which flux kubectl sops
+      - test -f {{.BOOTSTRAP_PATH}}/flux/kustomization.yaml
+      - test -f {{.BOOTSTRAP_PATH}}/flux/age-key.sops.yaml
+      - sops --decrypt {{.BOOTSTRAP_PATH}}/flux/age-key.sops.yaml
+      - sops --decrypt {{.FLUX_PATH}}/vars/cluster-secrets.sops.yaml
+      - test -f {{.FLUX_PATH}}/config/kustomization.yaml
+    cmds:
+      - kubectl apply --server-side --kustomize {{.BOOTSTRAP_PATH}}/flux
+      - sops --decrypt {{.BOOTSTRAP_PATH}}/flux/age-key.sops.yaml | kubectl apply -f-
+      - sops --decrypt {{.FLUX_PATH}}/vars/cluster-secrets.sops.yaml | kubectl apply -f -
+      - kubectl apply --server-side --kustomize {{.FLUX_PATH}}/config
