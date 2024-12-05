@@ -4,6 +4,13 @@ vars:
   BOOTSTRAP_PATH: "{{.ROOT_DIR}}/bootstrap"
   FLUX_PATH: "{{.ROOT_DIR}}/flux"
 tasks:
+  stack:
+    aliases:
+      - s
+    cmds:
+      - task: talos
+      - task: apps
+      - task: flux
   talos:
     aliases:
       - t
@@ -16,7 +23,7 @@ tasks:
       - test -f "${TALOSCONFIG}"
       - talosctl config info
     cmds:
-      - task: :talos:apply-clusterconfig
+      - task: :talos:apply-clusterconfigs
         vars:
           INSECURE: "true"
       - task: :talos:bootstrap
@@ -32,7 +39,7 @@ tasks:
       - test -f {{.BOOTSTRAP_PATH}}/apps/helmfile.yaml
       - talosctl config info
     cmds:
-      - until kubectl wait nodes --for-condition=Ready=False --all --timeout=10m; do sleep 5; done
+      - until kubectl wait nodes --for=condition=Ready=False --all --timeout=10m; do sleep 5; done
       - helmfile --quiet --file {{.BOOTSTRAP_PATH}}/apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
       - until kubectl wait nodes --for=condition=Ready --all --timeout=10m; do sleep 5; done
 

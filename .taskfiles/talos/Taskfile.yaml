@@ -35,7 +35,7 @@ tasks:
     desc: Bootstrap cluster
     aliases:
       - b
-    cmd: talhelper gencommand bootstrap {{.TAL_FLAGS}} | sh
+    cmd: until $(talhelper gencommand bootstrap {{.TAL_FLAGS}} | sh); do sleep 5; done
     preconditions:
       - test -f {{.TAL_PATH}}/talconfig.yaml
 
