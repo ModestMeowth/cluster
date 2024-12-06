@@ -50,6 +50,7 @@ spec:
   interval: 30m
   timeout: 5m
   path: ./apps/network/ingress-nginx/internal
+  prune: true
   sourceRef:
     kind: GitRepository
     name: cluster-git
