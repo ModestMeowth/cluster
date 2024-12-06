@@ -31,11 +31,12 @@ spec:
             enabled: true
       ui:
         ingress:
-        className: "internal-nginx"
+          enabled: "true"
+          className: "internal-nginx"
         annotations:
-          external-dns.alpha.kubernetes.io/target: ingress-int.rocinante.lan
+          external-dns.alpha.kubernetes.io/target: cluster.lan
         hosts:
-          - hubble-main.rocinante.lan
+          - hubble-main.cluster.lan
     operator:
       prometheus:
         enabled: true
