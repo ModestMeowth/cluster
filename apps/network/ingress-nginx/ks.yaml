@@ -9,14 +9,14 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
-    interval: 30m
-    timeout: 5m
-    path: ./apps/network/ingess-nginx/shared
-    sourceRef:
-      kind: GitRepository
-      name: cluster-git
-    wait: true
-    dependsOn: []
+  interval: 30m
+  timeout: 5m
+  path: ./apps/network/ingess-nginx/shared
+  sourceRef:
+    kind: GitRepository
+    name: cluster-git
+  wait: true
+  dependsOn: []
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -28,14 +28,14 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
-    interval: 30m
-    timeout: 5m
-    path: ./apps/network/ingress-nginx/external
-    sourceRef:
-      kind: GitRepository
-      name: cluster-git
-    wait: true
-    dependsOn: []
+  interval: 30m
+  timeout: 5m
+  path: ./apps/network/ingress-nginx/external
+  sourceRef:
+    kind: GitRepository
+    name: cluster-git
+  wait: true
+  dependsOn: []
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -47,11 +47,11 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
-    interval: 30m
-    timeout: 5m
-    path: ./apps/network/ingress-nginx/internal
-    sourceRef:
-      kind: GitRepository
-      name: cluster-git
-    wait: true
-    dependsOn: []
+  interval: 30m
+  timeout: 5m
+  path: ./apps/network/ingress-nginx/internal
+  sourceRef:
+    kind: GitRepository
+    name: cluster-git
+  wait: true
+  dependsOn: []
