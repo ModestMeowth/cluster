@@ -1,6 +1,6 @@
 ---
 clusterName: &clustername cluster
-endpoint: https://192.168.100.101:6443
+endpoint: https://cluster.lan:6443
 
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
 talosVersion: 1.8.3
@@ -9,6 +9,7 @@ kubernetesVersion: v1.31.3
 
 additionalApiServerCertSans: &sans
   - rocinante.cat-alkaline.ts.net
+  - cluster.lan
   - &vip ${clusterEndpointIP}
   - 127.0.0.1 # KubePrism
 additionalMachineCertSans: *sans
@@ -19,7 +20,7 @@ cniConfig:
 nodes:
   - hostname: controller
     ignoreHostname: true
-    ipAddress: 192.168.100.101, 192.168.100.102, 192.168.100.103
+    ipAddress: 10.1.1.11, 10.1.1.12, 10.1.1.13
     installDisk: /dev/vda
     controlPlane: true
     networkInterfaces:
@@ -93,7 +94,7 @@ controlPlane:
           extraMounts: []
           nodeIP:
             validSubnets:
-              - 192.168.100.0/24
+              - 10.1.1.0/24
     # Enable KubePrism
     - |-
       machine:
@@ -128,18 +129,9 @@ controlPlane:
       machine:
         network:
           extraHostEntries:
-            - ip: 192.168.100.100
+            - ip: 10.1.1.10
               aliases:
-                - cluster.local
-            - ip: 192.168.100.101
-              aliases:
-                - talos1
-            - ip: 192.168.100.102
-              aliases:
-                - talos2
-            - ip: 192.168.100.103
-              aliases:
-                - talos3
+                - cluster.lan
     # Configure custom sysctls
     - |-
       machine:
@@ -148,11 +140,6 @@ controlPlane:
           fs.inotify.max_user_watches: 1048576
           net.core.rmem_max: 67108864
           net.core.wmem_max: 67108864
-          net.ipv4.tcp_rmem: 4096 87380 33554432
-          net.ipv4.tcp_wmem: 4096 87380 33554432
-          net.ipv4.tcp_tw_reuse: 1
-          net.ipv4.tcp_window_scaling: 1
-          net.ipv4.tcp_congestion_control: bbr
     # Configure udev rules
     - |-
       machine:
@@ -165,7 +152,7 @@ controlPlane:
       cluster:
         etcd:
           advertisedSubnets:
-            - 192.168.100.0/24
+            - 10.1.1.0/24
     # Configure NFS mount options
     - |-
       machine:
