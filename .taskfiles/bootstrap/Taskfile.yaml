@@ -62,5 +62,5 @@ tasks:
       - kubectl apply --server-side --kustomize {{.BOOTSTRAP_PATH}}/flux
       - sops --decrypt {{.BOOTSTRAP_PATH}}/flux/age-key.sops.yaml | kubectl apply -f-
       - sops --decrypt {{.FLUX_PATH}}/vars/cluster-secrets.sops.yaml | kubectl apply -f -
+      - kubectl apply --server-side --filename {{.FLUX_PATH}}/vars/cluster-settings.yaml
       - kubectl apply --server-side --kustomize {{.FLUX_PATH}}/config
-      - kubectl apply --server-side --kustomize {{.FLUX_PATH}}/vars
