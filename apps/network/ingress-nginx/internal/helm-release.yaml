@@ -31,7 +31,7 @@ spec:
       publishService:
         enabled: true
       ingressClassResource:
-        name: external-nginx
+        name: internal-nginx
         default: false
         controllerValue: k8s.io/ingress-nginx-internal
       admissionWebhooks:
