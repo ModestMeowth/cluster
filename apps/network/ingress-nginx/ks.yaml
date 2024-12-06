@@ -30,7 +30,7 @@ spec:
       app.kubernetes.io/name: *appname
     interval: 30m
     timeout: 5m
-    path: ./apps/network/ingess-nginx/external
+    path: ./apps/network/ingress-nginx/external
     sourceRef:
       kind: GitRepository
       name: cluster-git
@@ -49,7 +49,7 @@ spec:
       app.kubernetes.io/name: *appname
     interval: 30m
     timeout: 5m
-    path: ./apps/network/ingess-nginx/internal
+    path: ./apps/network/ingress-nginx/internal
     sourceRef:
       kind: GitRepository
       name: cluster-git
