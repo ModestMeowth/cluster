@@ -31,12 +31,12 @@ spec:
             enabled: true
       ui:
         ingress:
-          enabled: "true"
+          enabled: true
           className: "internal-nginx"
-        annotations:
-          external-dns.alpha.kubernetes.io/target: cluster.lan
-        hosts:
-          - hubble-main.cluster.lan
+          annotations:
+            external-dns.alpha.kubernetes.io/target: cluster.lan
+          hosts:
+            - hubble-main.cluster.lan
     operator:
       prometheus:
         enabled: true
