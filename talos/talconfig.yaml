@@ -1,6 +1,6 @@
 ---
 clusterName: &clustername cluster
-endpoint: https://cluster.lan:6443
+endpoint: https://192.168.0.31:6443
 
 # renovate: depName=ghcr.io/siderolabs/installer datasource=docker
 talosVersion: 1.8.3
@@ -8,9 +8,7 @@ talosVersion: 1.8.3
 kubernetesVersion: v1.31.3
 
 additionalApiServerCertSans: &sans
-  - rocinante.cat-alkaline.ts.net
-  - cluster.lan
-  - &vip ${clusterEndpointIP}
+  - &vip 192.168.0.31
   - 127.0.0.1 # KubePrism
 additionalMachineCertSans: *sans
 
@@ -20,7 +18,8 @@ cniConfig:
 nodes:
   - hostname: controller
     ignoreHostname: true
-    ipAddress: 10.1.1.11, 10.1.1.12, 10.1.1.13
+    talosImageURL: "factory.talos.dev/installer-secureboot/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba"
+    ipAddress: 192.168.0.101, 192.168.0.107, 192.168.0.112
     installDisk: /dev/vda
     controlPlane: true
     networkInterfaces:
@@ -94,7 +93,7 @@ controlPlane:
           extraMounts: []
           nodeIP:
             validSubnets:
-              - 10.1.1.0/24
+              - 192.168.0.0/24
     # Enable KubePrism
     - |-
       machine:
@@ -152,7 +151,7 @@ controlPlane:
       cluster:
         etcd:
           advertisedSubnets:
-            - 10.1.1.0/24
+            - 192.168.0.0/24
     # Configure NFS mount options
     - |-
       machine:

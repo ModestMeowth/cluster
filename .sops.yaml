@@ -1,15 +1,18 @@
 keys:
-  - &roci_host_age age1xltxc87jgp6fzjlwapfctpa23vaqn2cqwqyta8vh0g0yrgs6adfqs0arc9
+  - &pnby_mm_age age1qex5ky044eyqrsymkg6ynfvpy96wxjdldvdmlmy35e5mt2v5zczqla98ed
   - &roci_mm_age age18lt2qwmtvuj0ujf9zrxr4wsehhxuvqc3e79s53c20wq5fv6jhqyst4m83t
+  - &vdrm_mm_age age1vz6akhdt4hwfxe3d2n7er2nym7lttcg7uchafysajdtwa696zcyq6latjk
 creation_rules:
-  - path_regex: .*/talos/.*\.sops.ya?ml$
-    key_groups:
+  - path_regex: .*/talos/.*\sops.ya?ml$
+    keygroups:
       - age:
-        - *roci_host_age
-        - *roci_mm_age
-  - path_regex: .*\.sops\.ya?ml$
-    encrypted_regex: "^(data|stringData)$"
+          - *pnby_mm_age
+          - *roci_mm_age
+          - *vdrm_mm_age
+  - path_regex: .*\.sops.ya?ml$
     key_groups:
-      - age:
-        - *roci_host_age
-        - *roci_mm_age
+      - pgp: []
+        age:
+          - *pnby_mm_age
+          - *roci_mm_age
+          - *vdrm_mm_age

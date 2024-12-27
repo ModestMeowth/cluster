@@ -13,8 +13,8 @@ tasks:
     cmds:
       - talhelper genconfig {{.TAL_FLAGS}} --secret-file {{.TAL_PATH}}/talsecret.sops.yaml
     preconditions:
-      - test -f {{.TAL_PATH}}/talenv.sops.yaml
       - test -f {{.TAL_PATH}}/talsecret.sops.yaml
+      - test -f {{.TAL_PATH}}/talenv.sops.yaml
       - test -f {{.TAL_PATH}}/talconfig.yaml
 
   apply-clusterconfigs:

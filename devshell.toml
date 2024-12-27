@@ -21,7 +21,7 @@ package = "unstable.talosctl"
 category = "talos"
 
 [[commands]]
-package = "pkgs.talhelper"
+package = "unstable.talhelper"
 category = "talos"
 
 [[commands]]

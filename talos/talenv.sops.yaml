@@ -1,32 +1,3 @@
-clusterName: ENC[AES256_GCM,data:0Z7fhCOr6w==,iv:8+8Jro/JxvaPlPqK8/v35tFqpPKoyJgE8coQaXd7+0g=,tag:nkpnh36CLeEDRK2DAsnv1g==,type:str]
-clusterDNSSuffix: ENC[AES256_GCM,data:K56c,iv:8a5Me9Tc5fCHCgmHWggcZPsVXOojF98RHWACRZLmvCk=,tag:7i3idlFkGBoGMxEtBPxYUQ==,type:str]
-clusterEndpointIP: ENC[AES256_GCM,data:/q+n5Z5bINPr,iv:z/kp6PiTTLNS4s5jZXDD2ly/E6lb43rqMaxfcAZwCmc=,tag:fu0VAavPjjFOL9eN740kFg==,type:str]
-sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age:
-        - recipient: age1xltxc87jgp6fzjlwapfctpa23vaqn2cqwqyta8vh0g0yrgs6adfqs0arc9
-          enc: |
-            -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBlb3lJc1I1dU9sb0F5M0wy
-            V0xSUmE3bVZmR3M0ZFUrS0t4MlRQeDNkSTJZCm5ydWVSM3RZNGVrVmpuNGVwRkdr
-            cjdMYmlCYXhEcVNXOG01ODZxdmRpU0EKLS0tIGVZenNDVnNxQ1YwYWFrRXpPaWF2
-            c2tqdENNYmxQWGhQWE9VWmRNeFJVV0kKgvJWHqCtgIBjiaj4Hu7/F1qV8CfHQTdJ
-            51T3Qwuj+/KbDTigB5WmwZu1JIWibtycqyihk88Ycvt94RWEP7m12Q==
-            -----END AGE ENCRYPTED FILE-----
-        - recipient: age18lt2qwmtvuj0ujf9zrxr4wsehhxuvqc3e79s53c20wq5fv6jhqyst4m83t
-          enc: |
-            -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBwUytDS1FQb1hPYVVrQzVJ
-            cTFCUjEwVEV2ak5VWmtqaVFTVkYyQnd5QXpvClYxaHN3VEwwMlFscUJic2s5UWw2
-            S2JoVmxVZHZaNEI3eUp1elg2SGdBWU0KLS0tIDFLT1FSa29rbUZIdkxwaW05YzNS
-            TzdUMzZ0V2dmUEFqdEpaMC9qZjIrcWsKK3VXz/yeyc+njmi0w5KE7v2tU4fCLqP4
-            XbbR2CtP9wd3+4NA4NbLmGA3HVNv8O5jdbJUYk8PEO7pw9qGQhVG0Q==
-            -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2024-12-06T01:05:43Z"
-    mac: ENC[AES256_GCM,data:CcHlaaBR6dwtqL4HCT7DeetTUFgCe5VZrnqSDoPUYLedrR8YddGASPeFkeLgZ8/tJhTZ/1Bgqa4wc58wldKeneb9J1rrczZDHwo6YrF9Pj4l8Lj1M56f8c9WN5RWMFnTf8fCjlsz4PMFEtjOC1rxcwYKyX5k1jSS77HLSLa2NiI=,iv:Rl2KC+naYrpthzG9gtCzRSiaFFHPgcUcrDlAuNf9FcI=,tag:WlZ2vu5L5bdLtDaxyJvbig==,type:str]
-    pgp: []
-    unencrypted_suffix: _unencrypted
-    version: 3.9.1
+clusterName: cluster
+clusterDNSSuffix: lan
+clusterEndpointIP: 10.1.1.10
